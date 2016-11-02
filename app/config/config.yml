@@ -47,11 +47,10 @@ vich_uploader:
     mappings:
         image:
             uri_prefix:         /uploads/images
-            upload_destination: '%kernel.root_dir%/web/uploads/images'
             namer:              vich_uploader.namer_uniqid
             inject_on_load:     false
             delete_on_remove:   true
-            delete_on_update:   false
+            delete_on_update:   true
 
 # Doctrine Configuration
 doctrine:

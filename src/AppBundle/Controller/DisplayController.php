@@ -12,8 +12,15 @@ class DisplayController extends Controller{
 	 * 
 	 */
 	public function showAction($id) {
+		$image = $this->getDoctrine()
+			->getRepository('AppBundle:Image')
+			->find($id);
+		
+		$helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
+		$path = $helper->asset($image, 'image');
+		
 		return $this->render('/default/display.html.twig', array(
-				'image' => $id,
+				'path' => $path
 		));
 	}
 	

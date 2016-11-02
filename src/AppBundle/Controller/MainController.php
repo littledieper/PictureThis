@@ -23,8 +23,11 @@ class MainController extends Controller {
 		if ($form->isSubmitted() && $form->isValid()) {
 			// add necessary values for DB
 			$image->fill();
+			
+			/*
 			$helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 			$path = $helper->asset($image, 'image');
+			 */
 			
 			// persist the $image variable to DB
 			$em = $this->getDoctrine()->getManager();
@@ -39,8 +42,7 @@ class MainController extends Controller {
 			// code to redirect should look something like this.... research?
 			// See route: AppBundle\Controller\DisplayController.php
 			return $this->redirectToRoute('app_image_display', array(
-					'id' => $image->getId(),
-					'path' => $path
+					'id' => $image->getId()
 			));
 		}
 		

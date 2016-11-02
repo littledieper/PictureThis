@@ -2,9 +2,8 @@
 
 {% block body %}
 	<div class='container'>
-		<header>Displaying...</header>
 			<div class='row'>		
-   				<img src="{{ vich_uploader_asset(image, 'image')}}" alt="{{ image.fileName }}">
+   				<img src= {{ asset(path) }} >
 			</div>
 	</div>
 {% endblock %}
