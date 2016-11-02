@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Entity
@@ -14,12 +12,15 @@ use Doctrine\ORM\Mapping\JoinColumn;
 class Tag {
 
 	/**
-	 * @ManyToOne(targetEntity="Image", inversedBy="tags")
-	 * @JoinColumn(name="imageID", referencedColumnName="imageID")
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\ManyToOne(targetEntity="Image", inversedBy="tags")
+	 * @ORM\JoinColumn(name="imageID", referencedColumnName="id")
 	 */
-	private $imageID;
+	private $image;
 	
 	/**
+	 * @ORM\Id
 	 * @ORM\Column(type="string")
 	 */
 	private $tag;
@@ -28,11 +29,11 @@ class Tag {
 	
 	// ---------- GETTERS AND SETTTERS -------------
 	
-	public function getImageID() {
-		return $this->imageID;
+	public function getImage() {
+		return $this->image;
 	}
-	public function setImageID($imageID) {
-		$this->imageID = $imageID;
+	public function setImage($image) {
+		$this->image = $image;
 		return $this;
 	}
 	public function getTag() {

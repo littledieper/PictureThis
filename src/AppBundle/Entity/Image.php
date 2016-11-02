@@ -2,12 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity
+ * @Vich\Uploadable
+ * 
  * @ORM\Table(name="image")
  */
 class Image {
@@ -16,10 +20,10 @@ class Image {
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @ORM\Column(type="integer")
 	 */
-	private $imageID;
+	private $id;
 	
 	/**
-	 * @OneToMany(targetEntity="Tag", mappedBy="imageID")
+	 * @ORM\OneToMany(targetEntity="Tag", mappedBy="image")
 	 */
 	private $tags;
 	
@@ -34,31 +38,88 @@ class Image {
 	private $fileSize;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	private $length;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="integer", nullable=true)
 	 */
 	private $width;
 	
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $uploadDate;
+	
+	/**
+	 * This is the database entry of the file....
+	 * @ORM\Column(type="string")
+	 */
+	private $fileName;
+	
+	/**
+	 * This is the actual file to be uploaded....
+	 * @Assert\Image(
+	 * 		maxSize = "8M"
+	 * )
+	 * @Vich\UploadableField(mapping="image", fileNameProperty="fileName")
+	 */
+	private $image;
+	
+	
 	// required for one-to-many relationship with Tag
 	public function __construct() {
+		
 		$this->tags = new ArrayCollection();
 	}
 	
-
-
-	// ------------ GETTERS AND SETTERS -----------------
-	
-	
-	
-	public function getImageID() {
-		return $this->imageID;
+	/**
+	 * Instantiates fileSize and fileType when ready to upload to DB
+	 */
+	public function fill() {
+		if ($this->image != null) {
+			$this->fileSize = $this->image->getClientSize();
+			$this->fileType = $this->image->guessExtension();
+		}
 	}
-	public function setImageID($imageID) {
-		$this->imageID = $imageID;
+	
+
+	
+	// ----------- FILE-SPECIFIC UPLOAD GET/SET --------------
+	
+	/**
+	 * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+	 * @return Image
+	 */
+	public function setImage(File $image = null){
+		$this->image = $image;
+		
+		if ($image) {
+			// It is required that at least one field changes if you are using Doctrine
+			// otherwise the event listeners won't be called and the file is lost
+			$this->uploadDate = new \DateTime('now');
+		} // end if
+	}
+	public function getImage()
+	{
+		return $this->image;
+	}
+	public function getFileName() {
+		return $this->fileName;
+	}
+	public function setFileName($fileName) {
+		$this->fileName = $fileName;
+		return $this;
+	}
+	
+	
+	// ------------ GENERIC GETTERS AND SETTERS -----------------
+	public function getId() {
+		return $this->id;
+	}
+	public function setId($id) {
+		$this->id = $id;
 		return $this;
 	}
 	public function getTags() {
@@ -96,5 +157,12 @@ class Image {
 		$this->width = $width;
 		return $this;
 	}
-	
+	public function getUploadDate() {
+		return $this->uploadDate;
+	}
+	public function setUploadDate($uploadDate) {
+		$this->uploadDate = $uploadDate;
+		return $this;
+	}
+
 }
