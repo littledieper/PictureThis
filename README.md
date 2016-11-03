@@ -11,13 +11,13 @@ Feel free to fork the repository if you'd like to work with us.
 * MySQL -- Click [here](https://www.mysql.com/downloads/) to get the MySQL server.
 
 ### Setup
-To install the necessary libraries.
+Install the necessary libraries with Composer.
 ```
 cd ..\path_to_project\
 composer install
 ```
 
-Configure your MySQL database. 
+Configure your MySQL database and start it.
 ```yml
 # ..\app\config\parameters.yml
 # Example configuration
@@ -29,7 +29,7 @@ parameters:
     database_password: password
 ```
 
-To run the built in PHP server...
+Start the built-in PHP webserver.
 ```
 cd ..\path_to_project\
 php bin/console server:run
