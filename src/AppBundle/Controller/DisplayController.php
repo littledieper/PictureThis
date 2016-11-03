@@ -16,6 +16,7 @@ class DisplayController extends Controller{
 			->getRepository('AppBundle:Image')
 			->find($id);
 		
+		// grab the path to the image in the directory
 		$helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 		$path = $helper->asset($image, 'image');
 		
