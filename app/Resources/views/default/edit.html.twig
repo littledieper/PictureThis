@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<script src="vendor/photoeditor/js/PhotoEditorSDK.min.js"></script>
+  	<script src="vendor/photoeditor/js/PhotoEditorReactUI.min.js"></script>
+{% endblock %}
+
+{% block body %}
+	<div id="editor" style="width: 640px; height: 480px;"></div>
+	<script>
+         window.onload = function () {
+            var container = document.getElementById('editor')
+            var editor = new PhotoEditorSDK.UI.ReactUI({
+              	container: container,
+              	assets: {
+              		baseUrl: 'vendor/photoeditor/assets' // <-- This should be the absolute path to your `assets` directory
+             	}
+            })
+          }
+        </script>
+{% endblock %}
+        
+{% block javascripts %}
+	{{ parent() }}
+	<link rel="stylesheet" href="vendor/photoeditor/css/PhotoEditorReactUI.min.css" />
+{% endblock %}
