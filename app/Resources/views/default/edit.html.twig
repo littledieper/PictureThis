@@ -9,15 +9,33 @@
 {% block body %}
 	<div id="editor" style="width: 640px; height: 480px;"></div>
 	<script>
-         window.onload = function () {
-            var container = document.getElementById('editor')
-            var editor = new PhotoEditorSDK.UI.ReactUI({
-              	container: container,
-              	assets: {
-              		baseUrl: 'vendor/photoeditor/assets' // <-- This should be the absolute path to your `assets` directory
-             	}
-            })
-          }
+           window.onload = function () {
+   			 var container = document.getElementById('editor')
+   			 var editor = new PhotoEditorSDK.UI.ReactUI({
+   			   editor: {
+   			   	export: {
+   			  	 	download: false,
+      				type: PhotoEditorSDK.RenderType.DATAURL
+   			   	}
+   			   },
+   			   container: container,
+   			   assets: {
+    			    baseUrl: '/vendor/photoeditor/assets' // <-- This should be the absolute path to your `assets` directory
+    			  }
+ 			   })
+			  
+			  editor.on('export', (dataURL) => {
+	        	   $.ajax({
+	        	     type: "POST",
+	        	     url: "/export",
+	        	     data: {
+	        	       image: dataURL
+	        	     }
+	        	   }).done(function() {
+	        		 console.log('saved');
+	        	   })
+	        	})
+           }
         </script>
 {% endblock %}
         
