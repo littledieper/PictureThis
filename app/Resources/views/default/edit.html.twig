@@ -7,17 +7,19 @@
 {% endblock %}
 
 {% block body %}
-	<div id="editor" style="width: 640px; height: 480px;"></div>
+	<div id="editor" style="width: 100%; height: 720px;"></div>
 	<script>
            window.onload = function () {
    			 var container = document.getElementById('editor')
    			 var editor = new PhotoEditorSDK.UI.ReactUI({
-   			   editor: {
-   			   	export: {
-   			  	 	download: false,
-      				type: PhotoEditorSDK.RenderType.DATAURL
-   			   	}
-   			   },
+				enableWebcam: false,
+   			 	editor: {
+   			   		export: {
+   			  		 	download: false,
+      					type: PhotoEditorSDK.RenderType.DATAURL
+   			   		},
+		   			responsive: true
+   			   	},
    			   container: container,
    			   assets: {
     			    baseUrl: '/vendor/photoeditor/assets' // <-- This should be the absolute path to your `assets` directory
@@ -30,6 +32,9 @@
 	        	     url: "/export",
 	        	     data: {
 	        	       image: dataURL
+	        	     },
+	        	     success: function(urlFromController) {
+	        	         window.location.href = urlFromController;
 	        	     }
 	        	   }).done(function() {
 	        		 console.log('saved');

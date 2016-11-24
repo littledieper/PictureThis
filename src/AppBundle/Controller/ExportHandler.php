@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ExportHandler extends Controller{
 
@@ -40,9 +41,15 @@ class ExportHandler extends Controller{
 		$em->persist($image);
 		$em->flush();
 		
+		return new JsonResponse($this->generateUrl('app_image_display', array(
+				'id' => $image->getId()
+		)));
+		
+		/*
 		//this doesn't actually redirect
 		return $this->redirectToRoute('app_image_display', array(
 				'id' => $image->getId()
-		));				
+		));
+		*/				
 	}
 }
