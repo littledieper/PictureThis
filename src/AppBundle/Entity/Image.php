@@ -81,6 +81,9 @@ class Image {
 		if ($this->image != null) {
 			$this->fileSize = $this->image->getClientSize();
 			$this->fileType = $this->image->guessExtension();
+			$dimensions = getimagesize($this->image);
+			$this->length = $dimensions[0];
+			$this->width = $dimensions[1];
 		}
 	}
 	
