@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DisplayController extends Controller{
 	
 	/**
-	 * @Route("image/{id}", name="app_image_display")
+	 * @Route("image/{id}", name="display")
 	 * 
 	 */
 	public function showAction($id) {
@@ -16,12 +16,14 @@ class DisplayController extends Controller{
 			->getRepository('AppBundle:Image')
 			->find($id);
 		
-		// grab the path to the image in the directory
-		$helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
-		$path = $helper->asset($image, 'image');
-		
+		/**
+		 * Directly pass all image info as an array so we can use
+		 * the rest of the info when we display, instead of just the path.
+		 * 
+		 * Perhaps theres a performance benefit too?
+		 */
 		return $this->render('/default/display.html.twig', array(
-				'path' => $path
+				'image' => $image
 		));
 	}
 	

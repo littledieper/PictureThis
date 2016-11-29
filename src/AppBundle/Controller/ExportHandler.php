@@ -41,7 +41,7 @@ class ExportHandler extends Controller{
 		$em->persist($image);
 		$em->flush();
 		
-		return new JsonResponse($this->generateUrl('app_image_display', array(
+		return new JsonResponse($this->generateUrl('display', array(
 				'id' => $image->getId()
 		)));
 		

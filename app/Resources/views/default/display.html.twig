@@ -3,7 +3,9 @@
 {% block body %}
 	<div class='container'>
 		<div class='row'>		
-   			<img src= {{ asset(path) }} >
+   			<img src="{{ vich_uploader_asset(image, 'image', 'AppBundle\\Entity\\Image') }}" 
+   				alt= {{ image.fileName }}
+   				style="max-height:720px;">
 		</div>
 	</div>
 {% endblock %}
