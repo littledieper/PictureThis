@@ -24,7 +24,7 @@ class GalleryController extends Controller{
 		// retrieve 6 random images
 		$images = array();
 		for ($i = 0; $i < 6; $i++) {
-			$id = rand(0, $max);
+			$id = rand(1, $max);
 			$images[] = $this->getDoctrine()
 			->getRepository('AppBundle:Image')
 			->find($id);
