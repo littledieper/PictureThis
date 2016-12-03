@@ -12,11 +12,12 @@ class DisplayController extends Controller{
 	 * 
 	 */
 	public function showAction($id) {
+		// retrieve the Image from the DB
 		$image = $this->getDoctrine()
 			->getRepository('AppBundle:Image')
 			->find($id);
 		
-		/**
+		/*
 		 * Directly pass all image info as an array so we can use
 		 * the rest of the info when we display, instead of just the path.
 		 * 

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +13,7 @@ class EditController extends Controller {
 	 */
 	public function showAction(Request $request)
 	{
+		// display the form for editing...
 		return $this->render('default/edit.html.twig');
 	}
 
