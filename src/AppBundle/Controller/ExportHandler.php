@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Entity\Tag;
 
 class ExportHandler extends Controller{
 
@@ -17,7 +18,9 @@ class ExportHandler extends Controller{
 	 */
 	public function showAction(Request $request) {
 		
+		// retrieve AJAX
 		$img = $_POST["image"];
+		$input = $_POST["input"];
 		
 		//Remove leading meta information
 		$img = str_replace("data:image/png;base64,", "", $img);
@@ -34,22 +37,30 @@ class ExportHandler extends Controller{
 		//kind of a hackjob? this takes the local file generated through file_put_contents and "uploads" that
 		$file = new UploadedFile($filepath, "upload.png", 'image/png', filesize($filepath), null, true);
 		$image->setImage($file);
-		//$image = imagecreatefromstring($data);
 		$image->fill();
+		
+		//process the tag strings from input field and split by ,
+		$tags = explode(",", $input);
+		// add the tags to the image
+		foreach ($tags as $tag) {
+			$image->addTag(new Tag($image, $tag));
+		} // end foreach
+		
 		//persist the $image variable to DB
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($image);
 		$em->flush();
 		
-		return new JsonResponse($this->generateUrl('display', array(
-				'id' => $image->getId()
-		)));
+		// add flash message for upload success
+		$this->addFlash('success', 'Image successfully uploaded!');
 		
-		/*
-		//this doesn't actually redirect
-		return $this->redirectToRoute('app_image_display', array(
-				'id' => $image->getId()
-		));
-		*/				
+		/* 
+		 * Return json response for AJAX to receive and redirect
+		 * See views\default\edit.html.twig for AJAX
+		 */
+		return new JsonResponse($this->generateUrl('display', array(
+				'id' => $image->getId(),
+				'tags' => $tags
+		)));			
 	}
 }

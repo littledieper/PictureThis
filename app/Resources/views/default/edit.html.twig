@@ -30,21 +30,58 @@
  			   })
 			  
 			  editor.on('export', (dataURL) => {
-	        	   $.ajax({
-	        	     type: "POST",
-	        	     url: "/export",
-	        	     data: {
-	        	       image: dataURL
-	        	     },
-	        	     success: function(urlFromController) {
-	        	         window.location.href = urlFromController;
-	        	     }
-	        	   }).done(function() {
-	        		 console.log('saved');
-	        	   })
-	        	})
+				   $('#myModal').modal('show');
+				   $('#myModal').on('hidden.bs.modal', function() {
+					    // get the tags from the input field
+						var tagInput = $('#tagInput').val();
+						// export the info to process. see: ExportHandler.php	
+						 $.ajax({
+			        	     type: "POST",
+			        	     url: "/export",
+			        	     data: {
+			        	       image: dataURL,
+			        	       input: tagInput
+			        	     },
+			        	     success: function(urlFromController) {
+			        	         window.location.href = urlFromController;
+			        	     }
+			        	   }).done(function() {	
+			        		 console.log('saved');
+			          	   }) // end ajax	 	   
+			       }) // end modal
+			  }) // end editor.on
+				   
+	        	   
            }
         </script>
+        
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    	aria-labelledby="myModalLabel">
+    	<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal"
+    					aria-label="Close">
+    					<span aria-hidden="true">&times;</span>
+    				</button>
+    				<h4 class="modal-title" id="myModalLabel">Add some tags!</h4>
+    			</div>
+    			<!-- modal-header -->
+    			<div class="modal-body">Input some tags below, separated by
+    				commas!</div>
+    			<div class="input-group">
+    				<span class="input-group-addon"></span> <input id="tagInput"
+    					type="text" class="form-control" aria-describedby="basic-addon1"
+    					placeholder="Tags go here...">
+    			</div>
+    			<div class="modal-footer">
+    				<button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+    			</div>
+    		</div>
+    		<!-- modal content -->
+    	</div>
+    </div>
+    
 {% endblock %}
         
 {% block javascripts %}
