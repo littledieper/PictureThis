@@ -43,7 +43,7 @@ class ExportHandler extends Controller{
 		$tags = explode(",", $input);
 		// add the tags to the image
 		foreach ($tags as $tag) {
-			$image->addTag(new Tag($image, $tag));
+			$image->addTag(new Tag($image, trim($tag)));
 		} // end foreach
 		
 		//persist the $image variable to DB
