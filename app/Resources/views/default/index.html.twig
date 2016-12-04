@@ -1,15 +1,37 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href={{ "css\index.css" }}
+{% endblock %}
+
 {% block body %}
-	<div class="container">	
-	    <div class="row">
-	    	<div class="col-xs-12">
-	    		{{ form_start(imageForm) }}
-	           		{{ form_row(imageForm.image) }}
-	            	<button type="submit" class="btn btn-primary" formnovalidate>Upload</button>
-	            {{ form_end(imageForm) }}	
-	    	</div>
-	    </div>
-	</div>
+    <div class="jumbotron">
+    	<div class="container">
+    		<h1>PictureThis!</h1>
+    		<p>Welcome to the easiest way to upload, edit, and share your images. 
+    		Feel free to check out what others have made, or make something for yourself!</p>
+    		<p><a class = "btn btn-primary btn-lg" href="/edit" role = "button">Click here to get started!</a></p>
+    	</div> <!-- end container -->
+    </div> <!-- end jumbotron -->
+
+    <div class='container'>
+    	<div class="panel panel-default">
+    		<div class="panel-body">
+    			<h2>Here's what other's have made...</h2>
+    			<!-- process images in BS thumbnails -->
+    			{% for image in images %}
+    			<div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
+    				<a href="{{ "image/#{image.id}" }}"> <img class="img-thumbnail"
+    					src="{{ vich_uploader_asset(image, 'image', 'AppBundle\\Entity\\Image') }}">
+    				</a>
+    			</div> <!-- end BS thumbnail col -->
+    			{% endfor %}
+    		</div> <!-- end panel-body -->
+    		<div class="panel-footer">
+    			<p><a class="btn btn-primary btn-lg" href="/edit" role="button">Want to see more?</a></p>
+    		</div> <!-- end panel-footer -->
+    	</div> <!-- end panel panel-default -->
+    </div> <!-- end container -->
 {% endblock %}
 
