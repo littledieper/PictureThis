@@ -16,7 +16,6 @@
 	<buildpathentry kind="src" path="vendor/symfony/polyfill-util"/>
 	<buildpathentry kind="src" path="vendor/twig/twig/lib"/>
 	<buildpathentry kind="src" path="vendor/sensio/generator-bundle"/>
-	<buildpathentry kind="src" path="vendor/doctrine/annotations/lib"/>
 	<buildpathentry kind="src" path="vendor/monolog/monolog/src/Monolog"/>
 	<buildpathentry kind="src" path="vendor/doctrine/cache/lib/Doctrine/Common/Cache"/>
 	<buildpathentry kind="src" path="vendor/doctrine/doctrine-bundle"/>
@@ -38,6 +37,7 @@
 	<buildpathentry kind="src" path="vendor/doctrine/common/lib/Doctrine/Common"/>
 	<buildpathentry excluding="Intl/Resources/stubs/" kind="src" path="vendor/symfony/symfony/src/Symfony/Component"/>
 	<buildpathentry kind="src" path="vendor/composer"/>
+	<buildpathentry kind="src" path="vendor/doctrine/annotations/lib/Doctrine/Common/Annotations"/>
 	<buildpathentry kind="src" path="vendor/psr/cache/src"/>
 	<buildpathentry kind="src" path="vendor/doctrine/instantiator/src/Doctrine/Instantiator"/>
 	<buildpathentry kind="src" path="vendor/ocramius/proxy-manager/src"/>

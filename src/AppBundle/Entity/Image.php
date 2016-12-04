@@ -23,7 +23,7 @@ class Image {
 	private $id;
 	
 	/**
-	 * @ORM\OneToMany(targetEntity="Tag", mappedBy="image")
+	 * @ORM\OneToMany(targetEntity="Tag", mappedBy="image", cascade={"persist"})
 	 */
 	private $tags;
 	
@@ -81,6 +81,9 @@ class Image {
 		if ($this->image != null) {
 			$this->fileSize = $this->image->getClientSize();
 			$this->fileType = $this->image->guessExtension();
+			$dimensions = getimagesize($this->image);
+			$this->length = $dimensions[0];
+			$this->width = $dimensions[1];
 		}
 	}
 	
@@ -122,13 +125,6 @@ class Image {
 		$this->id = $id;
 		return $this;
 	}
-	public function getTags() {
-		return $this->tags;
-	}
-	public function setTags($tags) {
-		$this->tags = $tags;
-		return $this;
-	}
 	public function getFileType() {
 		return $this->fileType;
 	}
@@ -165,4 +161,31 @@ class Image {
 		return $this;
 	}
 
+
+	public function getTags() {
+		return $this->tags;
+	}
+    /**
+     * Add tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     *
+     * @return Image
+     */
+    public function addTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
 }

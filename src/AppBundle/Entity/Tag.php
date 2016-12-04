@@ -10,10 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 
 class Tag {
-
+	
 	/**
 	 * @ORM\Id
-	 * @ORM\Column(type="integer")
 	 * @ORM\ManyToOne(targetEntity="Image", inversedBy="tags")
 	 * @ORM\JoinColumn(name="imageID", referencedColumnName="id")
 	 */
@@ -24,8 +23,16 @@ class Tag {
 	 * @ORM\Column(type="string")
 	 */
 	private $tag;
-	
-	
+
+	/**
+	 * Constructor to make our lives easier...
+	 * @param Image $image
+	 * @param string $tag
+	 */
+	public function __construct(Image $image, string $tag) {
+		$this->image = $image;
+		$this->tag = $tag;
+	}
 	
 	// ---------- GETTERS AND SETTTERS -------------
 	
@@ -43,7 +50,5 @@ class Tag {
 		$this->tag = $tag;
 		return $this;
 	}
-	
-	
-	
+
 }
