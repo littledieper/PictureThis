@@ -6,10 +6,20 @@
    			<img src="{{ vich_uploader_asset(image, 'image', 'AppBundle\\Entity\\Image') }}" 
    				alt= {{ image.fileName }}
    				style="max-height:720px;">
-   			{{ dump(image) }}
+   			<div class="box">
+   			Tags: 
    			{% for tag in image.tags  %}
-   				{{ tag.tag }}
+   				{{ tag.tag }},
    			{% endfor %}
+   			</div>
 		</div>
 	</div>
+	
+	<style>
+	.box {
+	  margin: 20px auto;
+	  border: 3px solid black;
+	  padding: 10px;
+	}
+</style>
 {% endblock %}
