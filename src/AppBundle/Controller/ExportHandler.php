@@ -59,8 +59,7 @@ class ExportHandler extends Controller{
 		 * See views\default\edit.html.twig for AJAX
 		 */
 		return new JsonResponse($this->generateUrl('display', array(
-				'id' => $image->getId(),
-				'tags' => $tags
+				'id' => $image->getId()
 		)));			
 	}
 }
