@@ -24,12 +24,18 @@ class MainController extends Controller {
 		$max = $em->createQuery("select count('id') from AppBundle\Entity\Image")->getSingleScalarResult();
 		
 		// retrieve 8 random images
+		$ids = array();
 		$images = array();
 		for ($i = 0; $i < 8; $i++) {
 			$id = rand(1, $max);
-			$images[] = $this->getDoctrine()
-			->getRepository('AppBundle:Image')
-			->find($id);
+			if (!in_array($id, $ids)) {
+				$images[] = $this->getDoctrine()
+				->getRepository('AppBundle:Image')
+				->find($id);
+				$ids[] = $id;
+			} else {
+				$i--;
+			}
 		} // end for
 	
 		

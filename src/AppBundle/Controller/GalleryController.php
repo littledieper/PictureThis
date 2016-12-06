@@ -21,18 +21,23 @@ class GalleryController extends Controller{
 		// retrieve max number of rows from table images
 		$max = $em->createQuery("select count('id') from AppBundle\Entity\Image")->getSingleScalarResult();
 		
-		// retrieve 6 random images
+		// retrieve 16 random images
+		$ids = array();
 		$images = array();
-		for ($i = 0; $i < 18; $i++) {
+		for ($i = 0; $i < 16; $i++) {
 			$id = rand(1, $max);
-			$images[] = $this->getDoctrine()
-			->getRepository('AppBundle:Image')
-			->find($id);
+			if (!in_array($id, $ids)) {
+				$images[] = $this->getDoctrine()
+				->getRepository('AppBundle:Image')
+				->find($id);
+				$ids[] = $id;	
+			} else {
+				$i--;
+			}
 		} // end for
 		
 		return $this->render('default/gallery.html.twig', array(
 				'images' => $images
 		));
 	} // end showAction
-	
 }
