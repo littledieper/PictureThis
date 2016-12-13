@@ -5,6 +5,7 @@ PictureThis! is a group project for the CECS343 Software Engineering class at CS
 PictureThis! uses [Symfony3](https://symfony.com/) for its back-end and relies on img.ly's [PhotoEditorSDK](https://www.photoeditorsdk.com/) for its image processing. It uses [Twig](http://twig.sensiolabs.org/) as its templating engine in PHP with default Twitter [Bootstrap3](https://getbootstrap.com) elements. It mainly uses [Doctrine](http://www.doctrine-project.org/) to map given entities to tables in our [MySQL](https://www.mysql.com/) database. 
 
 ## Installation
+This installation tutorial is to setup a development environment using PHP7's webserver. To see an installation tutorial for a production environment using Apache, click [here](https://github.com/littledieper/PictureThis/blob/apache/README.md).
 ### Pre-requisites
 * PHP 7.0 -- Click [here](http://php.net/downloads.php) and download the suitable version for your system.
 [Here](https://www.sitepoint.com/how-to-install-php-on-windows/) is a good tutorial for Windows.
