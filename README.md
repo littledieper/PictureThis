@@ -66,10 +66,10 @@ git clone https://github.com/littledieper/picturethis.git --branch apache
 The webserver will also need to read and write to the files located in the project directory, so we will be adding permissions using ACL.
 We will give read and execute permissions on the entire project directory. Run ```sudo setfacl -R -m u:www-data:rX picturethis```.
 
-We will need to give read, write, and execute permissions on the log and cache directories and any files that it will need to create.  Run
+We will need to give read, write, and execute permissions on the log, cache, and upload directories and any files that it will need to create.  Run
 ```
-sudo setfacl -R -m u:www-data:rwX picturethis/var/cache picturethis/var/logs
-sudo setfacl -dR -m u:www-data:rwX picturethis/var/cache picturethis/var/logs
+sudo setfacl -R -m u:www-data:rwX picturethis/var/cache picturethis/var/logs picturethis/web/uploads
+sudo setfacl -dR -m u:www-data:rwX picturethis/var/cache picturethis/var/logs picturethis/web/uploads
 ```
 
 You can check if you did it correctly by running ``` getfacl picturethis/var/cache```. The output should look similar to this:
